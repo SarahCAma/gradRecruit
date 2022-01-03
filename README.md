@@ -4,6 +4,8 @@ gradRecruit has 2 user models - the Graduate (Candidate) and the Employer. As su
 
 This app is designed to take both Candidate and Employer through the employment process from the very beginning of the job search/job vacancy upload to the end - the job offer. Candidates are able to sign up, add a CV to their profile, submit job applications, see whether they have been shortlisted for interview and ultimately, whether they have been successfully recruited for the job. Employers are able to sign up, create job vacancies, review and shortlist submitted applications, create interview sessions and notify successful candidates of their job offer.
 
+View this app in action [here](https://youtu.be/CM3Q8vQxPWY).
+
 ## Design
 
 
