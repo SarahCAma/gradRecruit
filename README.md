@@ -1,7 +1,6 @@
 My Django web application is a graduate recruitment web application with the brand name of 'gradRecruit'. 
 
-## Distinctiveness and Complexity
-The primary feature that makes my capstone project distinct and more complex from the previous projects is that there are 2 user models - the Graduate (Candidate) and the Employer. As such, I’ve had to design my web app with 2 separate users in mind and ensure that their user experience on the app never overlaps.
+gradRecruit has 2 user models - the Graduate (Candidate) and the Employer. As such, I’ve had to design my web app with 2 separate users in mind and ensure that their user experience on the app never overlaps.
 
 This app is designed to take both Candidate and Employer through the employment process from the very beginning of the job search/job vacancy upload to the end - the job offer. Candidates are able to sign up, add a CV to their profile, submit job applications, see whether they have been shortlisted for interview and ultimately, whether they have been successfully recruited for the job. Employers are able to sign up, create job vacancies, review and shortlist submitted applications, create interview sessions and notify successful candidates of their job offer.
 
