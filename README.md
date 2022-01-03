@@ -1,4 +1,4 @@
-My web application is a graduate recruitment web application with the brand name of 'gradRecruit'. 
+My Django web application is a graduate recruitment web application with the brand name of 'gradRecruit'. 
 
 ## Distinctiveness and Complexity
 The primary feature that makes my capstone project distinct and more complex from the previous projects is that there are 2 user models - the Graduate (Candidate) and the Employer. As such, I’ve had to design my web app with 2 separate users in mind and ensure that their user experience on the app never overlaps.
