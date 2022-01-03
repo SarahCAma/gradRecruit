@@ -1,0 +1,26 @@
+{% extends "recruit/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if about %}
+        <h4>About</h4>
+
+        <p>
+            Vivamus quis hendrerit ipsum, a hendrerit dolor. Morbi urna tellus, feugiat at pellentesque et, finibus sed elit. Donec pretium semper posuere. Suspendisse pulvinar, sem eget placerat venenatis, erat sapien vehicula nibh, vel scelerisque odio orci aliquam nibh. Proin sed lacinia nibh. Vivamus quis enim nec risus euismod dictum a vitae tortor. Nulla facilisi. Integer sed enim a massa malesuada efficitur vel luctus felis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam luctus odio tristique ex laoreet, vitae lacinia augue accumsan. Morbi dolor tortor, mattis nec laoreet sit amet, vulputate quis risus. Donec commodo arcu non tellus pulvinar faucibus. Sed vitae enim felis. Nunc porttitor massa quis augue vestibulum, at ultricies sem pharetra. Vestibulum vestibulum ut urna sit amet volutpat. Nunc eu ligula dui.
+
+            Nam facilisis vitae orci non ultricies. Aliquam tempor volutpat hendrerit. Nunc lobortis vitae mi nec ornare. Nam ut nibh ut ipsum rhoncus ornare. Nam id vestibulum sem. Cras dignissim faucibus mollis. Nunc sagittis pellentesque lobortis. Sed velit ipsum, sollicitudin ac tellus ac, imperdiet imperdiet tellus. Fusce convallis, velit vitae tristique tempor, mauris nibh laoreet neque, ut iaculis ante magna eget dui. Aliquam erat volutpat. Nullam elementum ipsum eget sollicitudin molestie. Integer ut lacinia ex, vel rutrum quam. Nam tortor ligula, tempor vel ex ut, eleifend sodales erat. Donec tristique volutpat risus, quis rhoncus arcu. Morbi porttitor congue magna, ut efficitur velit rutrum ac. Nunc vel elementum tortor.
+        </p>
+    {% endif%}
+
+    {% if contact %}
+        <h4>Contact Us</h4>
+
+        <ul>
+            <li>Tel: (+44) 20 1000 2000</li>
+            <li>Email: help@gradrecruit.co.uk</li>
+            <li>Address: gradRecruit Headquarters, 80 Company Road, London, E1CV 8IK</li>
+        </ul>
+    {% endif %}
+
+{% endblock body %}

@@ -1,0 +1,74 @@
+{% extends "recruit/layout.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block body %}
+<p id="candidate-name" hidden>{{ candidate }}</p>
+<p id="vacancy" hidden>{{ vacancy.job_title }}</p>
+<p id="candidate-id" hidden>{{ candidate.user.id }}</p>
+<h4>Application for {{ vacancy.job_title }}</h4>
+<h6 id="job-id">Ref: {{ vacancy.id }}</h6>
+<br>
+<br>
+<a class="btn btn-light" data-toggle="collapse" href="#job-details-collapse-div" role="button" aria-controls="job-details-collapse-div">Job details</a>
+<div class="collapse" id="job-details-collapse-div">
+    <div class="card card-body">
+        <p><h6>Salary: </h6><span>£{{vacancy.salary|intcomma}}</span></p>
+        <p><h6>Main Duties: </h6><span>{{vacancy.main_duties}}</span></p>
+        <p><h6>Person Specification: </h6><span>{{vacancy.person_spec}}</span></p>
+        <p><h6>For further information, please contact the hiring manager: </h6><span>{{vacancy.employer.recruiting_manager}}, {{vacancy.employer.user.email}}</span></p>
+    </div>
+</div>
+<br>
+<br>
+{% if not submission %}
+
+    {% if messages %}
+        {% for message in messages %}
+            
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+    {% if cv_exists %}
+        <h5>Your CV:</h5>
+            
+        <div class="d-flex w-100 justify-content-start">
+            <a class="text-decoration-none" href="{{ candidate.cv.url }}" target="_blank" role="button"><i class="far fa-file-alt fa-3x"></i></a>
+            <div class="alert alert-success w-30 ml-3" role="alert">
+                CV attached, you're ready to apply
+            </div>
+        </div>
+        
+        <h5>Your Cover Letter:</h5>
+        <form action="{% url 'apply_vacancy' vacancy_id=vacancy.id apply_type='submission' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    {% else %}
+
+        <div class="alert alert-warning w-50" role="alert">
+            {{ error_message }}
+        </div>
+        <form action="{% url 'apply_vacancy' vacancy_id=vacancy.id apply_type='new_application' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" disabled>
+        </form>
+        {% endif %}
+
+{% else %}
+
+    <h6> Thank you, your application has been submitted. Please check back regularly for further updates. </h6>
+
+{% endif %}
+
+{% endblock body %}
+
+{% block script %}
+    <script src="{% static 'recruit/apply_vacancy.js' %}"></script>
+{% endblock script %}

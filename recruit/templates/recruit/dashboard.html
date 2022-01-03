@@ -1,0 +1,174 @@
+{% extends "recruit/base.html" %}
+{% load static %}
+
+{% block title %}Candidate Portal | {{ profile.full_name }}{% endblock title %}
+
+{% block body %}
+<p id="candidate-id" hidden>{{ profile.id }}</p>
+
+    <div class="col-9 pl-5">
+        <div id="candidate-profile-view" class="views">
+        <!-- Profile Card -->
+        <div class="row p-3">
+            <div class="card w-100 profile-card">
+                <div class="card-header">
+                  My Profile
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="col-7">
+                            <h5>{{ profile.full_name }}</h5>
+                            {{ profile.email }}                            
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Profile Card     -->
+        {% if not cv_exists %}
+        <!-- CV Card Upload -->
+        <div class="row p-3">
+            <div class="card w-100 cv-card">
+                <div class="card-header">
+                  My CV
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Upload your CV</h5>
+                    <div class="text cv-card-text p-3">
+                        From your computer
+                        <form method="post" enctype="multipart/form-data" action="{% url 'cv_upload' profile.id %}">
+                            {% csrf_token %}
+                            <div id="cv-upload-input">
+                                {{ form.as_table }}
+                            </div>
+                            <button type="submit" id="cv-upload-submit">Save CV</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End CV Card Upload-->
+        {% else %}
+        <!-- CV Card Update -->
+        <div class="row p-3">
+            <div class="card w-100 cv-card">
+                <div class="card-header">
+                Your CV
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Update your CV</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Saved cv: <span class="badge badge-secondary">{{ cv_name }}</span></h5>
+                        </div>
+                    </div>
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="text cv-card-text p-3">
+                        From your computer
+                        <form method="post" enctype="multipart/form-data" action="{% url 'cv_upload' profile.id %}">
+                            {% csrf_token %}
+                            <div id="cv-upload-input">
+                                {{ form.as_table }}
+                            </div>
+                            <span><a href="{{ candidate.cv.url }}" class="btn btn-primary btn-sm mt-3 mr-3" role="button" download>Download CV</a><button class="btn btn-primary btn-sm mt-3" type="submit" id="cv-upload-submit">Update CV</button></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End CV Card Update -->
+        {% endif %}
+        </div>
+        <!-- END CANDIDATE PROFILE VIEW -->
+
+        <!-- APPLICATION VIEW -->
+        <div id="candidate-applications-view" class="views">
+            <div class="row p-3">
+                <div class="card w-100 profile-card">
+                    <div class="card-header">
+                      My Applications
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Your submitted applications are listed below. Clicking on an application will open a summary page where you can check the status of your application.</p>
+                        <br>
+                        <div id="application-list" class="list-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END APPLICATION VIEW -->
+
+        <!-- APPLICATION DETAILED VIEW -->
+        <div id="candidate-application-detail-view" class="views">
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-2">
+                            <h1><span class="badge badge-pill badge-info" id="company-initial"></span></h1>
+                        </div>
+                        <div class="col-10">
+                            <h1 id="company-name"></h1>
+                        </div>
+                    </div>
+                    <br>
+                    <h4 class="job-title">Job Title</h4>
+                    <h4 id="app-summary">Application Summary</h4>
+                    <br>
+                    <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Vacancy Details 
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card">
+                            <div class="card-header text-right" id="job-id">
+                            </div>
+                            <div class="card-body">
+                              <h4 class="card-title job-title"></h4>
+                              <h5 id="job-salary"></h5>
+                              <h6>Main Duties</h6>
+                              <p class="card-text" id="job-md"></p>
+                              <h6>Person Specification</h6>
+                              <p class="card-text" id="job-ps"></p>
+                              <h6>Further Information</h6>
+                              <p class="card-text" id="job-further-info"></p>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <!-- <div class="row"></div> -->
+                    <div class="card">
+                        <div class="card-header text-right" id="app-status-card"></div>
+                        <div class="card-body">
+                            <h6 class="card-title">Submitted:</h6>
+                            <p id="submit-date"></p>
+                            <h6 class="card-title">Status:</h6>
+                            <p id="status-info">Pending review</p>
+                        </div>
+                    </div>
+                    <button class="w-100 mt-3" id="view-app-btn">View Application</button>
+                    <!-- <button class="w-100 mt-3">Withdraw Application</button> -->
+
+                </div>
+            </div>
+        </div>
+</div>
+
+
+{% endblock body %}
+
+{% block script %}
+    <script src="{% static 'recruit/dashboard.js' %}"></script>
+{% endblock script %}

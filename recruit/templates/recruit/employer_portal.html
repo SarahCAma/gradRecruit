@@ -1,0 +1,137 @@
+{% extends "recruit/base.html" %}
+{% load static %}
+
+{% block title %}Employer Portal | {{ employer.company }}{% endblock title %}
+
+{% block body %}
+<p hidden id="employer-id">{{ request.user.id }}</p>
+{% csrf_token %}
+
+    <div class="col-9 pl-5">
+        <div class="row">
+            <div class="card w-100">
+                <div class="card-body">
+                <h4 class="card-title">{{ employer.company|upper }}</h5>
+                <p class="card-text"><strong>Recruiting Manager: </strong>{{ employer.recruiting_manager }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Employer Title Card -->
+        <!-- Active Vacancies Card -->
+        <div id="active-closed-vacancies-view" class="views">
+            <div class="row mb-3">
+                <div class="card active-vacancies-card w-100">
+                    <div class="card-header">Active Vacancies</div>
+                    <div class="card-body" id="active-vacancies-card"></div>
+                </div> 
+            </div>
+        <!-- End of active-vacancies-view -->
+        <!-- CLOSED VACANCIES CARD -->
+            <div class="row">
+                <div class="card closed-vacancies-card w-100">
+                    <div class="card-header">Closed Vacancies</div>
+                    <div class="card-body" id="closed-vacancies-card"></div>
+                </div> 
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="closingVacancyWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        This action will close this vacancy. Applications will no longer be accepted.
+                            
+                        If this is <b>not</b> what you want to do, please click <b>Go back</b>.
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Go back</button>
+                        <button type="button" class="btn btn-primary" id="close-vacancy-confirm-1" data-dismiss="modal">Close Vacancy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END CLOSED VACANCIES CARD -->
+        <!-- REVIEW APPLICATIONS VIEW -->
+        <div id="review-applications-view" class="views">
+            <div class="row">
+                <div class="card active-vacancies-card w-100">
+                    <div class="card-header text-right">Applications Submitted</div>
+                    <div class="card-body">
+                        <div class="d-flex w-100 justify-content-between">
+                        <h4 class="card-title job-title"></h4>
+                        <i title="Close Vacancy" role="button" data-toggle="modal" data-target="#alertClosingVacancy" class="far fa-window-close fa-2x"></i>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            <b>Please Note:</b> You will not be able to shortlist/reject applications until the vacancy has been closed.
+                        </div>
+                        <div class="list-group submitted-applications">
+                            <button class="w-25 my-3 text-align-center" type="submit" id="decision-btn">Submit Decision</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="alertClosingVacancy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        This action will close this vacancy. Applications will no longer be accepted.
+                            
+                        If this is <b>not</b> what you want to do, please click <b>Go back</b>.
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Go back</button>
+                        <button type="button" class="btn btn-primary" id="close-vacancy-confirm-2">Close Vacancy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END REVIEW APPLICATIONS VIEW -->
+        <!-- SHORTLISTED-REJECTED APPLICATIONS VIEW -->
+        <div id="shortlisting-outcome-view" class="views">
+            <div class="row">
+                <div class="card shortlisting-outcome-card w-100">
+                    <div class="card-header">Shortlisting Outcome</div>
+                    <div class="card-body">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="card-title job-title-soview"></h4>
+                            <i class="far fa-calendar-plus fa-2x" role="button" title="Create Interview"></i>
+                        </div>
+                        <div class="card shortlisted-applications-card w-100 my-4">
+                            <div class="card-header text-right">Shortlisted Applications</div>
+                            <div class="card-body" id="shortlisted-applications-list">
+
+                            </div>
+                        </div>
+                        <div class="card rejected-applications-card w-100">
+                            <div class="card-header text-right">Rejected Applications</div>
+                            <div class="card-body" id="rejected-applications-list">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SHORTLISTED-REJECTED APPLICATIONS VIEW -->
+        <!-- INTERVIEW OUTCOME VIEW -->
+    </div>
+{% endblock body %}
+
+{% block script %}
+    <script src="{% static 'recruit/employer_portal.js' %}"></script>
+{% endblock script %}

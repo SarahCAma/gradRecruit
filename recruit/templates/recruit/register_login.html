@@ -1,0 +1,144 @@
+{% extends "recruit/layout.html" %}
+{% load static %}
+
+{% block body %}
+<!-- Candidate registration/login view -->
+{% if candidate_registration_login %}
+<div id="candidate-registration-login">
+<div class="row mh-100">
+    <div class="col candidate p-5">
+        <h4>Candidate Registration</h4>
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'register' in message.tags %}
+            <div class="alert alert-danger p-1" role="alert">
+                {{ message }}
+            </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'register_candidate' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="first_name" placeholder="First Name" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="last_name" placeholder="Surname" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email Address" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+            <input class="btn btn-primary" type="submit" name="register_candidate" value="Register">
+        </form>
+    </div>
+    <div class="col candidate p-5">
+        <h4>Candidate Login</h4>
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'login' in message.tags %}
+            <div class="alert alert-danger p-1" role="alert">
+                {{ message }}
+            </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'login_candidate' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="email" placeholder="Email" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Login">
+        </form>    
+    </div> 
+</div>
+</div>
+{% endif %}
+<!-- End of candidate registration/login view -->
+<!-- Employer registration/login view -->
+{% if employer_registration_login %}
+<div id="employer-registration-login">
+<div class="row mh-100">
+    <div class="col employer p-5">
+        <h4>Employer Registration</h4>
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'register' in message.tags %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'register_employer' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="recruiting_manager" placeholder="Recruiting Manager" spellcheck="false" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="company" placeholder="Company" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="city">
+                    <option value="" disabled selected>City</option>
+                    <option value="Birmingham">Birmingham</option>
+                    <option value="Bradford">Bradford</option>
+                    <option value="Bristol">Bristol</option>
+                    <option value="Leeds">Leeds</option>
+                    <option value="Liverpool">Liverpool</option>
+                    <option value="London">London</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="Newcastle">Newcastle</option>
+                    <option value="Sheffield">Sheffield</option>
+                    <option value="Southampton">Southampton</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email Address" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+            <input class="btn btn-primary" type="submit" name="register_employer" value="Register">
+        </form>
+    </div>
+    <div class="col employer p-5">
+        <h4>Employer Login</h4>
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'login' in message.tags %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'login_employer' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="email" placeholder="Email" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password"> 
+            </div>
+            <input class="btn btn-primary" type="submit" value="Login">
+        </form>    
+    </div> 
+</div>
+</div>
+{% endif %}
+<!-- End of employer registration/login view -->
+
+
+{% endblock body %}

@@ -1,0 +1,139 @@
+{% extends "recruit/base.html" %}
+{% load static %}
+
+{% block title %}Employer Portal | {{ employer.company }}{% endblock title %}
+
+{% block body %}
+    <p hidden id="vacancy-id">{{ vacancy.id }}</p>
+    <p hidden id="vacancy-job-title">{{ vacancy.job_title }}</p>
+    <p hidden id="employer-id">{{ employer.user.id }}</p>
+    {% csrf_token %}
+    <div class="col-9 pl-5">
+        <div class="row">
+            <div class="card w-100">
+                <div class="card-body">
+                    <h4 class="card-title">{{ employer.company|upper }}</h4>
+                    <p class="card-text"><strong>Recruiting Manager: </strong>{{ employer.recruiting_manager }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- EMPLOYER TITLE CARD -->
+        <!-- CREATE INTERVIEW -->
+        {% if view == "create" %}
+        <div class="row" id="create-interview-view">
+            <p id="no-shortlisted-applicants" hidden>{{ shortlisted_applicants }}</p>
+            <div class="card w-100 create-interview-card">
+                <div class="card-header">Create Interview</div>
+                <div class="card-body">
+                    <h4 class="card-title">Interview for {{ vacancy.job_title }} (Ref: {{ vacancy.id }})</h4>
+                    <div class="alert alert-info">
+                        {% if shortlisted_applicants == 0 %}
+                            <p><b>Note:</b> There are {{ shortlisted_applicants }} shortlisted applications for this vacancy.</p>
+                        {% elif shortlisted_applicants == 1 %}
+                            <p><b>Note:</b> There is {{ shortlisted_applicants }} shortlisted application for this vacancy.</p>
+                            <hr>
+                            <p>Please enter a date and start time for the interview. You must also select the time duration for each interview slot.</p>
+                        {% else %}
+                            <p><b>Note:</b> There are {{ shortlisted_applicants }} shortlisted applications for this vacancy.</p>
+                            <hr>
+                            <p>Please enter a date and start time for the interview. You must also select the time duration for each interview slot.</p>
+                        {% endif %}
+                    </div>
+                    <form action="{% url 'create_interview' user_id=employer.user.id vacancy_id=vacancy.id %}" class="mt-5" id="create-interview-form" method="POST">
+                        <div class="form-group">
+                            {% csrf_token %}
+
+                            {% if form.errors %}
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <p> {{ error }} </p>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-danger" role="alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>{{ form.starting_datetime.label_tag }} {{ form.starting_datetime }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p>{{ form.time_interval.label_tag }} {{ form.time_interval }}</p>
+                                </div>
+                            </div> 
+
+                            <button type="submit" id="interview-submit">Create Interview</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- END CREATE INTERVIEW -->
+        {% elif view == "view" %}
+        <!-- VIEW INTERVIEW -->
+        <div class="row" id="view-interview-view">
+            <div class="card w-100 view-interview-card">
+                <div class="card-header" id="view-interview-header"></div>
+                <div class="card-body" id="interview-list">
+                    <h4 class="card-title mb-4" id="view-interview-title"></h4>
+                </div>
+            </div>
+        </div>
+        <!-- END VIEW INTERVIEW -->
+        {% elif view == "all" %}
+        <!-- ALL INTERVIEW -->
+        <p hidden id="employer-upcoming-interviews">{{ employer_upcoming_interviews }}</p>
+        <p hidden id="employer-interviews-to-create">{{ employer_interviews_to_create }}</p>
+        <div class="row" id="all-interviews-view">
+            <div class="card w-100 upcoming-interviews-card">
+                <div class="card-header">Upcoming Interviews</div>
+                <div class="card-body" id="upcoming-interviews-card">
+                </div>
+            </div>
+            <div class="card w-100 interviews-to-create-card">
+                <div class="card-header">Create Interview</div>
+                <div class="card-body" id="interviews-to-create-card">
+                    <div class="alert alert-info" role="alert">
+                        You have shortlisted the applications for the below vacancies. Please click on a vacancy to create an interview.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END ALL INTERVIEW -->
+        {% elif view == "post" %}
+        <!-- POST INTERVIEW VIEW -->
+        <div class="row" id="post-interview-view">
+            {% if stage == 4 %}
+            <p hidden id="vacancy-stage">{{ stage }}</p>
+            <div class="card w-100 post-interview-card">
+                <div class="card-header text-right" id="post-interview-header">Candidate Selection</div>
+                <div class="card-body" id="post-interview-card">
+                    <h4 class="card-title">{{ vacancy.job_title }} (Ref: {{ vacancy.id }})</h4>
+                    <button class="w-25 my-3 text-align-center" type="submit" id="decision-btn">Submit Decision</button>
+                </div>
+            </div>
+            {% else %}
+            <p hidden id="vacancy-stage">{{ stage }}</p>
+            <div class="card w-100 postholder-card">
+                <div class="card-header text-right">Selected Postholder</div>
+                <div class="card-body" id="interview-outcome-card">
+                    <h4 class="card-title">{{ vacancy.job_title }} (Ref: {{ vacancy.id }})</h4>
+                    <h6 class="postholder-details"></h6>
+                    <p id="postholder-info">You have selected the above candidate as the new post holder. Please email them to inform them of the outcome.</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- END POST INTERVIEW VIEW -->
+        {% endif %}
+    </div>
+{% endblock body %}
+
+{% block script %}
+    <script src="{% static 'recruit/interview.js' %}"></script>
+{% endblock script %}

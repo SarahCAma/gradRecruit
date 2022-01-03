@@ -1,0 +1,130 @@
+/* .col {
+    background-color: rgb(210, 210, 241);
+    margin: 10px;
+} */
+
+
+
+#header {
+    font-family: 'Josefin Slab', serif;
+    font-size: 50px;
+    font-weight: 700;;
+}
+
+.employer, .candidate {
+    text-align: center;
+    /* font-size: 18px; */
+    justify-content: center;
+}
+
+.btn-light {
+    margin: 5px;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+.index-grad-or-employer {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.fa-chevron-left {
+    margin: 0;
+    position: absolute;            
+    top: 50%;    
+    right: 10%;                     
+    transform: translate(0, -50%);
+    padding: 10px;   
+}
+
+.box {
+    /* height: 12em; */
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.fa-chevron-right {
+    margin: 0;
+    position: absolute;               
+    top: 50%;  
+    left: 10%;                       
+    transform: translate(0, -50%);
+    padding: 10px;  
+}
+
+.fa-chevron-left:hover, .fa-chevron-right:hover, .nav-item:hover {
+    cursor: pointer;
+}
+
+.grad-emp {
+    margin-top: 20px;
+}
+
+.latest-jobs, .search-jobs {
+    text-align: center;
+}
+
+.candidate-employer-1 {
+    margin-left: 10rem;
+}
+
+.candidate-employer-2 {
+    margin-right: 10rem;
+}
+
+
+.fa-user {
+    font-size: 55px;
+    float: right;
+}
+
+.cv-card-text {
+    background-color: rgba(128, 128, 128, 0.527);
+}
+
+#cv-upload-input {
+    background-color: white;
+    padding-left: 5px;
+    /* margin: auto; */
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+#cv-upload-submit {
+    margin-top: 5px;
+}
+
+#navbar-profile, #navbar-applications, #active-vacancies-navtab, #create-vacancy-navtab, #interviews-navtab, #interview-outcome-navtab {
+    color: black;
+}
+
+#candidate-applications-view, #candidate-application-detail-view, #review-applications-view, #already-applicant-view, #shortlisting-outcome-view {
+    display: none;
+}
+
+.alert-danger{
+    font-size: 18px;
+}
+
+/* h5[class="card-title"]{
+    text-align: center;
+} */
+
+.active-vacancies-card, .shortlisting-outcome-card, .create-interview-card, .view-interview-card, .upcoming-interviews-card, .post-interview-card, .postholder-card, .interviews-to-create-card {
+    margin-top: 20px;
+}
+
+.fa-file-alt:link, .fa-file-alt:visited {
+    text-decoration: none;
+}
+
+#home-box {
+    margin-bottom: 5px;
+}
+
+#search-jobs-view {
+    margin-top: 40px;
+}

@@ -1,0 +1,41 @@
+{% extends "recruit/layout.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block body %}
+
+    <p hidden id="user-is-employer">{{request.user.is_employer}}</p>
+
+    {% if total_jobs == 0 %}
+        <h5 class="align-text-center">Oops! We're not currently working on any of these graduate roles.</h5>
+    {% elif total_jobs == 1 %}
+        <h5 class="justify-content-center"> We've found {{ total_jobs }} job for you!</h5>
+    {% else %}
+        <h5 class="align-text-center">We've found {{ total_jobs }} jobs for you!</h5>
+    {% endif %}
+
+    {% for job in jobs %}
+        {% if forloop.first %}<div class="row justify-content-center">{% endif %}
+        <div class="col-3">
+            <div class="card border-secondary mb-3">
+                <div class="card-header">{{job.job_title}}</div>
+                <div class="card-body text-secondary">
+                    <h5 class="card-title">£{{job.salary|intcomma}}</h5>
+                    <p class="card-text">
+                        <span class="job-city">{{job.city|title}}</span><br>
+                        <span class="job-company">{{job.employer.company|title}}</span><br>
+                        <span class="job-category">{{job.category|title}}</span>
+                    </p>
+                    <br>
+                    <div class="d-flex w-100 justify-content-between"><a href="#" class="btn btn-secondary apply-btn" data-job-id="{{job.id}}">Apply</a></div>
+                </div>
+                <div class="card-footer text-muted">Closing: <span id="vacancy-deadline">{{job.deadline|date:"d M Y"}}</span></div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}</div><div class="row justify-content-center">{% endif %}
+        {% if forloop.last %}</div>{% endif %}
+    {% endfor %}
+{% endblock body %}
+{% block script %}
+        <script src="{% static 'recruit/search.js' %}"></script>
+{% endblock script %}

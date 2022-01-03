@@ -1,0 +1,120 @@
+{% extends "recruit/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <p hidden id="user-is-employer">{{request.user.is_employer}}</p>
+    <p hidden id="candidate-id">{{ request.user.id }}</p>
+    <p hidden id="number-active-vacancies">{{ num_active_vacancies }}</p>
+    <p hidden id="user_authenticated">{{ request.user.is_authenticated }}</p>
+    <div id="home-page-view">
+    <div><h4 class="latest-jobs">Latest Jobs</h4></div>
+    <div class="row" id="latest-vacancies">
+        <div class="col-2 box" id="left-arrow">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="col-2 box" id="right-arrow">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+    <div>
+      {{form.as_p}}
+    </div>
+    {% if not request.user.is_authenticated %}
+      <div clas="row" id="home-box">
+        <div class="index-grad-or-employer p-3">
+            <h4>Are you a graduate or an employer</h4>
+            <br>
+            <div class="d-flex w-100 justify-content-between">
+                <div class="candidate-employer-1">
+                    <a href="{% url 'register_login' 1 %}" class="btn btn-light btn-lg" role="button">Candidates</a>
+                    <p>Looking for graduate jobs?</p>
+                </div>
+                <div class="candidate-employer-2">
+                    <a href="{% url 'register_login' 2 %}" class="btn btn-light btn-lg" role="button">Employers</a>
+                    <p>Looking for skilled and talented graduates?</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    {% endif %}
+    </div>
+    <!-- End of home-page-view -->
+
+    <!-- Search Jobs -->
+    {% if request.user.is_authenticated %}
+    <div id="search-jobs-view">
+        <div><h4 class="search-jobs">Search Jobs</h4></div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+              <form method="get" action="{% url 'search_jobs' %}">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Keywords... (e.g. Marketing Officer)" aria-describedby="basic-addon2" name="q" autocomplete="off">
+                    <div class="input-group-append">
+                    <!-- <a href="{% url 'search_jobs' %}" class="btn btn-outline-secondary" role="button"><i class="fas fa-search"></i></a> -->
+                    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                  </div>
+                  </div>
+                </form>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- Modal -->
+    {% if not request.user.is_authenticated %}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Register or Log in</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         To apply for jobs, please register or log in to your candidate account.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a class="btn btn-secondary candidate-login-register" href="{% url 'register_login' 1 %}" role="button">Register or Login</a>
+          <!-- <button type="button" class="btn btn-secondary candidate-login-register">Register or Login</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- End Modal -->
+  <!-- Job details view -->
+  <div id="job-details-view">
+    <div class="card">
+      <div class="card-header text-right" id="job-id">
+      </div>
+      <div class="card-body">
+        <h4 class="card-title" id="job-title"></h4>
+        <h5 id="job-salary"></h5>
+        <h6>Main Duties</h6>
+        <p class="card-text" id="job-md"></p>
+        <h6>Person Specification</h6>
+        <p class="card-text" id="job-ps"></p>
+        <h6>Further Information</h6>
+        <p class="card-text" id="job-further-info"></p>
+        <a href="#" class="btn btn-primary apply-btn" id="vacancy-apply-btn">Apply</a>
+      </div>
+    </div>
+  </div>
+  <!-- End Job details view -->
+  <!-- About Us view -->
+  <div id="about-us-view">
+    <h4>About Us</h4>
+    <p>Enter some text here</p>
+  </div>
+  <!-- End About Us view -->
+
+
+
+{% endblock body %}
+{% block script %}
+        <script src="{% static 'recruit/index.js' %}"></script>
+{% endblock script %}

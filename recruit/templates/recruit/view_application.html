@@ -1,0 +1,23 @@
+{% extends "recruit/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% if view_application %}
+<h1>Submitted application for {{ application.job.job_title }}</h1>
+
+
+<span><h6>Cover Letter: </h6><p>{{ application.cover_letter }}</p></span>
+<a href="{{ application.cv }}" class="btn btn-primary" role="button" target="_blank">View CV</a>
+
+
+{% elif not view_application %}
+<br>
+<br>
+<h6>You have already applied for this vacancy. You cannot apply again.</h6>
+<p>Please go to your profile to view your submitted applications.</p>
+
+
+{% endif %}
+
+{% endblock body %}

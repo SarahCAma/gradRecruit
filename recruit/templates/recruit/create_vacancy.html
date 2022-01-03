@@ -1,0 +1,77 @@
+{% extends "recruit/base.html" %}
+{% load static %}
+
+{% block title %}Employer Portal | {{ employer.company }}{% endblock title %}
+
+{% block body %}
+
+<div class="col-9 pl-5">
+    <p hidden id="employer-id">{{ employer.user.id }}</p>
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-body">
+              <h4 class="card-title">{{ employer.company|upper }}</h5>
+              <p class="card-text"><strong>Recruiting Manager: </strong>{{ employer.recruiting_manager }}</p>
+            </div>
+        </div>
+    </div>
+    <div id="new-vacancy-view">
+        {% if messages %}
+        {% for message in messages %}
+            {% if 'warning' in message.tags %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="card active-vacancies-card w-100">
+                <div class="card-header">New Vacancy</div>
+                    <div class="card-body">
+                        <form action="{% url 'new_vacancy' profile.id %}" method="POST" id="create-new-vacancy-form">
+                            <div class="form-group">
+                            {% csrf_token %}
+
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <p> {{ error }} </p>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                                                        
+                                <p>{{ form.job_title.label_tag }} {{ form.job_title }}</p>
+                   
+                                <p>{{ form.main_duties.label_tag }} {{ form.main_duties }}</p>
+
+                                <p>{{ form.person_spec.label_tag }} {{ form.person_spec }}</p>
+                                
+                                <p>{{ form.salary.label_tag }} {{ form.salary }}</p>
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>{{ form.city.label_tag }} {{ form.city }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>{{ form.category.label_tag }} {{ form.category }}</p>
+                                    </div>
+                                </div>                         
+                                <p>{{ form.deadline.label_tag }} {{ form.deadline }}</p>
+                                    
+                                
+                                <button type="submit" id="vacancy-submit">Create Vacancy</button>
+                            </div>
+                        </form>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block script %}
+    <script src="{% static 'recruit/create_vacancy.js' %}"></script>
+{% endblock script %}
